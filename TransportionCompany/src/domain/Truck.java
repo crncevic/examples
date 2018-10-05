@@ -9,8 +9,15 @@ package domain;
  *
  * @author Petar
  */
-public class Truck extends Vehicle{
-   private boolean cargo;
+public class Truck extends Vehicle {
+
+    public static int numberOfTrucks = 0;
+
+    private boolean cargo;
+
+    public Truck() {
+        numberOfTrucks++;
+    }
 
     public boolean isCargo() {
         return cargo;
@@ -67,6 +74,5 @@ public class Truck extends Vehicle{
     public void setFuel(double fuel) {
         this.fuel = fuel;
     }
-   
-   
+
 }

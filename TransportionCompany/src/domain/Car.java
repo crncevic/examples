@@ -11,6 +11,12 @@ package domain;
  */
 public class Car extends Vehicle{
 
+    public static int numberOfCars = 0; 
+    
+    public Car(){
+        numberOfCars++;
+    }
+    
     public String getModel() {
         return model;
     }

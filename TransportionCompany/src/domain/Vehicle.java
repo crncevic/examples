@@ -9,7 +9,7 @@ package domain;
  *
  * @author Petar
  */
-public class Vehicle extends TransportionMean {
+public abstract class Vehicle extends TransportionMean {
     
     protected String model;
     protected double engineCapacity;

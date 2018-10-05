@@ -9,7 +9,7 @@ package domain;
  *
  * @author Petar
  */
-public class TransportionMean {
+public abstract class TransportionMean {
 
     protected boolean serviced;
     protected double fuel;
