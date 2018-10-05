@@ -15,7 +15,9 @@ public abstract class Vehicle extends TransportionMean {
     protected double engineCapacity;
     protected int yearOfProduction;
     protected int timesDriven;
+    protected double registrationTax;
 
    
-    
+     public abstract void drive() throws Exception; 
+     public abstract void displayState();
 }

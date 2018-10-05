@@ -14,5 +14,6 @@ public abstract class TransportionMean {
     protected boolean serviced;
     protected double fuel;
 
-   
+    public abstract void drive() throws Exception;
+    public abstract void displayState();
 }
