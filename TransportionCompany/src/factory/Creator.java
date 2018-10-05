@@ -13,7 +13,7 @@ import domain.TransportionMean;
  */
 public abstract class Creator {
     
-    protected TransportionMean tm;
+    public TransportionMean tm;
     
     public void create(){
        tm = createTransportionMean();

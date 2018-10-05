@@ -76,7 +76,7 @@ public class Car extends Vehicle{
 
     @Override
     public void drive() throws Exception{
-        if(fuel <= 0){
+        if(fuel <= 20){
             throw new Exception("Auto nema dovoljno goriva! Voznja nece biti obavljena!");
         }
         
@@ -86,6 +86,8 @@ public class Car extends Vehicle{
         
         this.fuel -= 20;
         this.timesDriven ++ ;
+        
+        displayState();
     }
     
      @Override

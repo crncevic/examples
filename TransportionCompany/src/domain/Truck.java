@@ -85,7 +85,7 @@ public class Truck extends Vehicle {
 
     @Override
     public void drive() throws Exception {
-        if (fuel <= 0) {
+        if ((fuel <= 20 && cargo == false) || (fuel<=40 && cargo==true)) {
             throw new Exception("Kamion nema dovoljno goriva! Voznja nece biti obavljena");
         }
 
@@ -101,6 +101,8 @@ public class Truck extends Vehicle {
         }
 
         timesDriven++;
+        
+        displayState();
     }
 
     @Override

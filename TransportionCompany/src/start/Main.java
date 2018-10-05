@@ -27,6 +27,7 @@ public class Main {
 
         m.chooseTransportionMean();
         m.creator.create();
+        m.drive();
 
     }
 
@@ -51,5 +52,30 @@ public class Main {
             System.exit(0);
         }
 
+    }
+
+    public void drive() {
+        int choose = -1;
+
+        do {
+            System.out.println("Izaberite (0-Izlaz 1-Startuj voznju)");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                choose = Integer.parseInt(bufferedReader.readLine());
+            } catch (Exception ex) {
+                System.out.println("Molimo Vas izaberite neki od brojeva 0 ili 1. Pokusajte ponovo");
+                choose = -1;
+            }
+
+            if (choose == 1) {
+                try {
+                    creator.tm.drive();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            } else if (choose == 0) {
+                System.exit(0);
+            }
+        } while (true);
     }
 }
