@@ -85,7 +85,7 @@ public class Truck extends Vehicle {
 
     @Override
     public void drive() throws Exception {
-        if ((fuel <= 20 && cargo == false) || (fuel<=40 && cargo==true)) {
+        if ((fuel <= 20 && cargo == false) || (fuel <= 40 && cargo == true)) {
             throw new Exception("Kamion nema dovoljno goriva! Voznja nece biti obavljena");
         }
 
@@ -101,13 +101,13 @@ public class Truck extends Vehicle {
         }
 
         timesDriven++;
-        
+
         displayState();
     }
 
     @Override
     public void displayState() {
-        System.out.println("*************************************************");
+        System.out.println("*********************** STANJE KAMIONA **************************");
         System.out.println("Model: " + model);
         System.out.println("Zapremina motora: " + engineCapacity);
         System.out.println("Godina proizvodnje: " + yearOfProduction);
@@ -115,7 +115,7 @@ public class Truck extends Vehicle {
         System.out.println("Gorivo: " + fuel + " litara");
         System.out.println("Natovaren: " + cargo);
         System.out.println("Servisiran: " + serviced);
-        System.out.println("*************************************************");
+        System.out.println("*****************************************************************");
     }
 
 }

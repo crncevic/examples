@@ -92,14 +92,14 @@ public class Car extends Vehicle{
     
      @Override
     public void displayState() {
-        System.out.println("*************************************************");
+        System.out.println("*********************** STANJE KOLA **************************");
         System.out.println("Model: " + model);
         System.out.println("Zapremina motora: " + engineCapacity);
         System.out.println("Godina proizvodnje: " + yearOfProduction);
         System.out.println("Vozen: " + timesDriven + " puta");
         System.out.println("Gorivo: " + fuel + " litara");
         System.out.println("Servisiran: " + serviced);
-        System.out.println("*************************************************");
+        System.out.println("**************************************************************");
     }
     
 }

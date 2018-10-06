@@ -13,6 +13,8 @@ public abstract class TransportionMean {
 
     protected boolean serviced;
     protected double fuel;
+    protected int yearOfProduction;
+    protected int timesDriven;
 
     public abstract void drive() throws Exception;
     public abstract void displayState();

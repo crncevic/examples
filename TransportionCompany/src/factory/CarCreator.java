@@ -21,22 +21,22 @@ public class CarCreator extends Creator {
         car = new Car();
 
         car.setModel("Passat B6");
-        System.out.println("Model auta je Passat B6");
+        System.out.println("Model auta je " + car.getModel());
 
         car.setYearOfProduction(2006);
-        System.out.println("Godina proizvodnje auta je 2006");
+        System.out.println("Godina proizvodnje auta je " + car.getYearOfProduction());
 
         car.setServiced(true);
-        System.out.println("Auto je servisiran");
+        System.out.println("Auto je servisiran: " + car.isServiced());
 
         car.setFuel(50);
-        System.out.println("U autu ima 50 litara benzina");
+        System.out.println("U autu ima " + car.getFuel() + " litara benzina");
 
         car.setEngineCapacity(2000);
-        System.out.println("Zapremina motora je 2000cm3");
+        System.out.println("Zapremina motora je " + car.getEngineCapacity() + " cm3");
 
         car.setTimesDriven(0);
-        System.out.println("Auto je vozen 0 puta do sada");
+        System.out.println("Auto je vozen " + car.getTimesDriven() + " puta do sada");
 
         if (car.getEngineCapacity() > 2000) {
             car.setRegistrationTax(1000);

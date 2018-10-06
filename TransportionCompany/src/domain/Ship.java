@@ -9,10 +9,9 @@ package domain;
  *
  * @author Petar
  */
-public abstract class Vehicle extends TransportionMean {
+public abstract class Ship extends TransportionMean{
+    protected boolean crewLoaded;
+    protected String name;
     
-    protected String model;
-    protected double engineCapacity;
-    protected double registrationTax;
-
+    public abstract void loadCrew();
 }

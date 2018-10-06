@@ -21,25 +21,25 @@ public class TruckCreator extends Creator {
         truck = new Truck();
 
         truck.setModel("Mercedes");
-        System.out.println("Model kamiona je Mercedes");
+        System.out.println("Model kamiona je "+truck.getModel());
 
         truck.setYearOfProduction(2016);
-        System.out.println("Godina proizvodnje kamiona je 2016");
+        System.out.println("Godina proizvodnje kamiona je "+truck.getYearOfProduction());
 
         truck.setEngineCapacity(3000);
-        System.out.println("Zapremina motora je 3000cm3");
+        System.out.println("Zapremina motora je "+truck.getEngineCapacity()+" cm3");
 
         truck.setServiced(true);
-        System.out.println("Kamion je servisiran");
+        System.out.println("Kamion je servisiran: "+truck.isServiced());
 
         truck.setFuel(200);
-        System.out.println("Kamion ima 200 litara goriva");
+        System.out.println("Kamion ima "+truck.getFuel()+" litara goriva");
 
         truck.setTimesDriven(0);
         System.out.println("Kamion je vozen 0 puta");
 
         truck.setCargo(false);
-        System.out.println("Kamion ne vozi teret");
+        System.out.println("Kamion vozi teret: "+truck.isCargo());
 
         if (truck.getEngineCapacity() > 4000) {
             truck.setRegistrationTax(3000);
