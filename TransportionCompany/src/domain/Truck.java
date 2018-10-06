@@ -12,6 +12,7 @@ package domain;
 public class Truck extends Vehicle {
 
     public static int numberOfTrucks = 0;
+    private final int gasUnitInLitres = 40;
 
     private boolean cargo;
 
@@ -83,9 +84,13 @@ public class Truck extends Vehicle {
         this.registrationTax = registrationTax;
     }
 
+    public int getGasUnitInLitres() {
+        return gasUnitInLitres;
+    }
+
     @Override
-    public void drive() throws Exception {
-        if ((fuel <= 20 && cargo == false) || (fuel <= 40 && cargo == true)) {
+    public void drive(Destination d) throws Exception {
+        if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres*2)) && cargo == true)) {
             throw new Exception("Kamion nema dovoljno goriva! Voznja nece biti obavljena");
         }
 

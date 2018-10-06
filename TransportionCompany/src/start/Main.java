@@ -6,6 +6,8 @@
 package start;
 
 import domain.Car;
+import domain.Destination;
+import domain.Sailboat;
 import domain.Ship;
 import domain.Truck;
 import domain.Vehicle;
@@ -18,6 +20,7 @@ import factory.TruckCreator;
 import factory.YachtCreator;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import service.Service;
 
 /**
  *
@@ -26,13 +29,24 @@ import java.io.InputStreamReader;
 public class Main {
 
     Creator creator;
+    Service service;
+    Destination currentDestination;
+
+    public Main() {
+        service = new Service();
+    }
 
     public static void main(String[] args) {
         Main m = new Main();
 
         m.chooseTransportionMean();
         m.creator.create();
-        m.drive();
+        Destination destination = m.chooseDestination();
+        if (destination != null) {
+            m.drive(destination);
+        } else {
+            System.out.println("Dogodila se greska u sistemu");
+        }
 
     }
 
@@ -70,7 +84,7 @@ public class Main {
 
     }
 
-    public void drive() {
+    public void drive(Destination d) {
         int choose = -1;
 
         do {
@@ -94,14 +108,14 @@ public class Main {
                 }
             }
 
-            
             switch (choose) {
                 case 1:
                     try {
-                        creator.tm.drive();
+                        creator.tm.drive(d);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
-                    }   break;
+                    }
+                    break;
                 case 2:
                     Ship s = (Ship) creator.tm;
                     s.loadCrew();
@@ -113,6 +127,60 @@ public class Main {
                     break;
             }
         } while (choose != 0);
+    }
+
+    public Destination chooseDestination() {
+
+        Destination d = null;
+        System.out.println("Izaberite destinaciju. Unesite tacan ID destinacije gde zelite da putujete!");
+
+        if (creator.tm instanceof Car || creator.tm instanceof Truck) {
+            for (Destination destination : service.getDestinations()) {
+                if (destination.isLandTransportion()) {
+                    System.out.println("ID: " + destination.getDestinationId() + ", Destinacija: " + destination.getName());
+                }
+            }
+        } else if (creator.tm instanceof Yacht || creator.tm instanceof Sailboat) {
+            for (Destination destination : service.getDestinations()) {
+                if (!destination.isLandTransportion()) {
+                    System.out.println("ID: " + destination.getDestinationId() + ", Destinacija: " + destination.getName());
+                }
+            }
+        }
+
+        boolean canBreake = false;
+        int choose = -1;
+        while (!canBreake) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                choose = Integer.parseInt(bufferedReader.readLine());
+            } catch (Exception ex) {
+                System.out.println("Molimo vas izaberite neki od ponudjenih ID-eva ili 0 za izlaz!");
+            }
+
+            if (choose == 0) {
+                System.out.println("Hvala na poverenju!Dovidjenja!");
+                System.exit(0);
+            }
+            d = containsDestination(choose);
+            if (d != null) {
+                canBreake = true;
+            } else {
+                System.out.println("Molimo vas izaberite neki od ponudjenih ID-eva ili 0 za izlaz!");
+            }
+        }
+
+        return d;
+    }
+
+    private Destination containsDestination(int choose) {
+        for (Destination destination : service.getDestinations()) {
+            if (destination.getDestinationId() == choose) {
+
+                return destination;
+            }
+        }
+        return null;
     }
 
 }

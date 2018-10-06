@@ -12,6 +12,7 @@ package domain;
 public class Yacht extends Ship {
 
     public static int numberOfYachts = 0;
+    private final int gasUnitInLitres = 100; 
     
     public Yacht(){
         numberOfYachts++;
@@ -65,8 +66,13 @@ public class Yacht extends Ship {
         this.timesDriven = timesDriven;
     }
 
+    public static int getNumberOfYachts() {
+        return numberOfYachts;
+    }
+    
+
     @Override
-    public void drive() throws Exception {
+    public void drive(Destination d) throws Exception {
         if (!serviced) {
             throw new Exception("Jahta nije servisirana! Nije moguce obaviti voznju!");
         }
@@ -75,7 +81,7 @@ public class Yacht extends Ship {
             throw new Exception("Jahta nema posadu! Nije moguce obaviti voznju!");
         }
 
-        if (fuel < 40) {
+        if (fuel < (d.getGasUnits() * gasUnitInLitres)) {
             throw new Exception("Jahta nema dovoljno goriva! Nije moguce obaviti voznju!");
         }
 
@@ -85,7 +91,7 @@ public class Yacht extends Ship {
         }
 
         timesDriven++;
-        fuel -= 100;
+        fuel -= gasUnitInLitres;
         crewLoaded = false;
 
          System.out.println("Voznja uspesno obavljena!!!");
