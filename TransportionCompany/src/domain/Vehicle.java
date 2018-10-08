@@ -14,5 +14,7 @@ public abstract class Vehicle extends TransportionMean {
     protected String model;
     protected double engineCapacity;
     protected double registrationTax;
+   
 
+    public abstract void calculateRegistrationFees();
 }

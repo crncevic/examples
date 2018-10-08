@@ -17,5 +17,7 @@ public abstract class TransportionMean {
     protected int timesDriven;
 
     public abstract void drive(Destination destination) throws Exception;
+    public abstract void loadFuel(int litres) throws Exception;
+    public abstract void doService();
     public abstract void displayState();
 }

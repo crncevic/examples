@@ -123,4 +123,29 @@ public class Truck extends Vehicle {
         System.out.println("*****************************************************************");
     }
 
+    @Override
+    public void calculateRegistrationFees() {
+    }
+
+   @Override
+    public void loadFuel(int litres) {
+        if (litres > 0) {
+            fuel += litres;
+            System.out.println("Natoceno je " + litres + " goriva");
+        } else {
+            System.out.println("Kolicina goriva mora da bude pozitivna!");
+        }
+    }
+
+    @Override
+    public void doService() {
+        serviced = true;
+        System.out.println("Kamion je servisiran!");
+    }
+    
+    public void loadCargo(){
+        cargo=true;
+        System.out.println("Kamion je natovaren!");
+    }
+
 }

@@ -37,4 +37,16 @@ public class Service {
        destinations.add(new Destination(6, "Malta", 5,false));
        
     }
+    
+    public List<Destination> getDestinationsForVehicle(){
+        List<Destination> destinationsVehicle = new ArrayList();
+        
+        for (Destination d : destinations) {
+            if(d.isLandTransportion()){
+                destinationsVehicle.add(d);
+            }
+        }
+        
+        return destinationsVehicle;
+    }
 }

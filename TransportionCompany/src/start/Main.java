@@ -5,6 +5,8 @@
  */
 package start;
 
+import application.mode.ApplicationMode;
+import application.mode.CarMode;
 import domain.Car;
 import domain.Destination;
 import domain.Sailboat;
@@ -28,25 +30,18 @@ import service.Service;
  */
 public class Main {
 
-    Creator creator;
-    Service service;
-    Destination currentDestination;
+    ApplicationMode am;
+   
 
     public Main() {
-        service = new Service();
+     
     }
 
     public static void main(String[] args) {
         Main m = new Main();
 
         m.chooseTransportionMean();
-        m.creator.create();
-        Destination destination = m.chooseDestination();
-        if (destination != null) {
-            m.drive(destination);
-        } else {
-            System.out.println("Dogodila se greska u sistemu");
-        }
+        
 
     }
 
@@ -65,16 +60,17 @@ public class Main {
 
         switch (choose) {
             case 1:
-                creator = new CarCreator();
+                am = new CarMode();
+                am.startConversation();
                 break;
             case 2:
-                creator = new TruckCreator();
+             //   creator = new TruckCreator();
                 break;
             case 3:
-                creator = new YachtCreator();
+              //  creator = new YachtCreator();
                 break;
             case 4:
-                creator = new SailboatCreator();
+               // creator = new SailboatCreator();
                 break;
             default:
                 System.out.println("Hvala na poverenju! Dovidjenja!!!");
@@ -84,103 +80,5 @@ public class Main {
 
     }
 
-    public void drive(Destination d) {
-        int choose = -1;
-
-        do {
-            if (creator.tm instanceof Vehicle) {
-                System.out.println("Izaberite (1-Startuj voznju 0-Izlaz)");
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-                try {
-                    choose = Integer.parseInt(bufferedReader.readLine());
-                } catch (Exception ex) {
-                    System.out.println("Molimo Vas izaberite neki od brojeva 0 ili 1. Pokusajte ponovo");
-                    choose = -1;
-                }
-            } else if (creator.tm instanceof Ship) {
-                System.out.println("Izaberite (1-Startuj voznju 2- Ukrcaj posadu 0-Izlaz)");
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-                try {
-                    choose = Integer.parseInt(bufferedReader.readLine());
-                } catch (Exception ex) {
-                    System.out.println("Molimo Vas izaberite neki od brojeva 0,1 ili 2. Pokusajte ponovo");
-                    choose = -1;
-                }
-            }
-
-            switch (choose) {
-                case 1:
-                    try {
-                        creator.tm.drive(d);
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    break;
-                case 2:
-                    Ship s = (Ship) creator.tm;
-                    s.loadCrew();
-                    break;
-                case 0:
-                    System.out.println("Hvala na poverenju! Dovidjenja!!!");
-                    System.exit(0);
-                default:
-                    break;
-            }
-        } while (choose != 0);
-    }
-
-    public Destination chooseDestination() {
-
-        Destination d = null;
-        System.out.println("Izaberite destinaciju. Unesite tacan ID destinacije gde zelite da putujete!");
-
-        if (creator.tm instanceof Car || creator.tm instanceof Truck) {
-            for (Destination destination : service.getDestinations()) {
-                if (destination.isLandTransportion()) {
-                    System.out.println("ID: " + destination.getDestinationId() + ", Destinacija: " + destination.getName());
-                }
-            }
-        } else if (creator.tm instanceof Yacht || creator.tm instanceof Sailboat) {
-            for (Destination destination : service.getDestinations()) {
-                if (!destination.isLandTransportion()) {
-                    System.out.println("ID: " + destination.getDestinationId() + ", Destinacija: " + destination.getName());
-                }
-            }
-        }
-
-        boolean canBreake = false;
-        int choose = -1;
-        while (!canBreake) {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            try {
-                choose = Integer.parseInt(bufferedReader.readLine());
-            } catch (Exception ex) {
-                System.out.println("Molimo vas izaberite neki od ponudjenih ID-eva ili 0 za izlaz!");
-            }
-
-            if (choose == 0) {
-                System.out.println("Hvala na poverenju!Dovidjenja!");
-                System.exit(0);
-            }
-            d = containsDestination(choose);
-            if (d != null) {
-                canBreake = true;
-            } else {
-                System.out.println("Molimo vas izaberite neki od ponudjenih ID-eva ili 0 za izlaz!");
-            }
-        }
-
-        return d;
-    }
-
-    private Destination containsDestination(int choose) {
-        for (Destination destination : service.getDestinations()) {
-            if (destination.getDestinationId() == choose) {
-
-                return destination;
-            }
-        }
-        return null;
-    }
-
+   
 }

@@ -9,15 +9,15 @@ package domain;
  *
  * @author Petar
  */
-public class Car extends Vehicle{
+public class Car extends Vehicle {
 
-    public static int numberOfCars = 0; 
+    public static int numberOfCars = 0;
     private final int gasUnitInLitres = 20;
-    
-    public Car(){
+
+    public Car() {
         numberOfCars++;
     }
-    
+
     public String getModel() {
         return model;
     }
@@ -77,25 +77,24 @@ public class Car extends Vehicle{
     public int getGasUnitInLitres() {
         return gasUnitInLitres;
     }
-    
 
     @Override
-    public void drive(Destination d) throws Exception{
-        if(fuel <= (d.getGasUnits() * gasUnitInLitres)){
+    public void drive(Destination d) throws Exception {
+        if (fuel <= (d.getGasUnits() * gasUnitInLitres)) {
             throw new Exception("Auto nema dovoljno goriva! Voznja nece biti obavljena!");
         }
-        
-        if(timesDriven > 8){
+
+        if (timesDriven > 8) {
             throw new Exception("Auto mora na servis! Voznja nece biti obavljena!");
         }
-        
+
         this.fuel -= 20;
-        this.timesDriven ++ ;
-        
+        this.timesDriven++;
+
         displayState();
     }
-    
-     @Override
+
+    @Override
     public void displayState() {
         System.out.println("*********************** STANJE KOLA **************************");
         System.out.println("Model: " + model);
@@ -106,5 +105,28 @@ public class Car extends Vehicle{
         System.out.println("Servisiran: " + serviced);
         System.out.println("**************************************************************");
     }
-    
+
+    @Override
+    public void calculateRegistrationFees() {
+
+    }
+
+    @Override
+    public void loadFuel(int litres) throws Exception {
+        if (litres > 0) {
+            fuel += litres;
+            System.out.println("Natoceno je " + litres + " goriva");
+        } else {
+            throw new Exception("Kolicina goriva mora da bude pozitivna!");
+        }
+        displayState();
+    }
+
+    @Override
+    public void doService() {
+        serviced = true;
+        System.out.println("Auto je servisiran!");
+        displayState();
+    }
+
 }
