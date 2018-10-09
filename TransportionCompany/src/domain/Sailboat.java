@@ -69,7 +69,6 @@ public class Sailboat extends Ship {
     public int getGasUnitInLitres() {
         return gasUnitInLitres;
     }
-    
 
     @Override
     public void drive(Destination d) throws Exception {
@@ -94,7 +93,7 @@ public class Sailboat extends Ship {
         timesDriven++;
         fuel -= gasUnitInLitres;
         crewLoaded = false;
-        
+
         System.out.println("Voznja uspesno obavljena!!!");
 
         displayState();
@@ -113,25 +112,31 @@ public class Sailboat extends Ship {
     }
 
     @Override
-    public void loadCrew() {
-        crewLoaded = true;
-        System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
+    public void loadCrew() throws Exception {
+        if (!crewLoaded) {
+            crewLoaded = true;
+            System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
+        } else {
+            throw new Exception("Posada je vec ukrcana!");
+        }
     }
 
     @Override
-    public void loadFuel(int litres) {
+    public void loadFuel(int litres) throws Exception {
         if (litres > 0) {
             fuel += litres;
             System.out.println("Natoceno je " + litres + " goriva");
         } else {
-            System.out.println("Kolicina goriva mora da bude pozitivna!");
+            throw new Exception("Kolicina goriva mora da bude pozitivna!");
         }
+        displayState();
     }
 
     @Override
     public void doService() {
         serviced = true;
         System.out.println("Kamion je servisiran!");
+        displayState();
     }
-    
+
 }

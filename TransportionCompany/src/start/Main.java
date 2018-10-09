@@ -7,22 +7,11 @@ package start;
 
 import application.mode.ApplicationMode;
 import application.mode.CarMode;
-import domain.Car;
-import domain.Destination;
-import domain.Sailboat;
-import domain.Ship;
-import domain.Truck;
-import domain.Vehicle;
-import domain.Yacht;
-import factory.CarCreator;
-
-import factory.Creator;
-import factory.SailboatCreator;
-import factory.TruckCreator;
-import factory.YachtCreator;
+import application.mode.SailboatMode;
+import application.mode.TruckMode;
+import application.mode.YachtMode;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import service.Service;
 
 /**
  *
@@ -31,17 +20,15 @@ import service.Service;
 public class Main {
 
     ApplicationMode am;
-   
 
     public Main() {
-     
+
     }
 
     public static void main(String[] args) {
         Main m = new Main();
 
         m.chooseTransportionMean();
-        
 
     }
 
@@ -64,13 +51,16 @@ public class Main {
                 am.startConversation();
                 break;
             case 2:
-             //   creator = new TruckCreator();
+                am = new TruckMode();
+                am.startConversation();
                 break;
             case 3:
-              //  creator = new YachtCreator();
+                am = new YachtMode();
+                am.startConversation();
                 break;
             case 4:
-               // creator = new SailboatCreator();
+                am = new SailboatMode();
+                am.startConversation();
                 break;
             default:
                 System.out.println("Hvala na poverenju! Dovidjenja!!!");
@@ -80,5 +70,4 @@ public class Main {
 
     }
 
-   
 }

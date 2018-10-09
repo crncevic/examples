@@ -90,7 +90,7 @@ public class Truck extends Vehicle {
 
     @Override
     public void drive(Destination d) throws Exception {
-        if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres*2)) && cargo == true)) {
+        if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres * 2)) && cargo == true)) {
             throw new Exception("Kamion nema dovoljno goriva! Voznja nece biti obavljena");
         }
 
@@ -106,6 +106,7 @@ public class Truck extends Vehicle {
         }
 
         timesDriven++;
+        cargo = false;
 
         displayState();
     }
@@ -127,25 +128,32 @@ public class Truck extends Vehicle {
     public void calculateRegistrationFees() {
     }
 
-   @Override
-    public void loadFuel(int litres) {
+    @Override
+    public void loadFuel(int litres) throws Exception {
         if (litres > 0) {
             fuel += litres;
             System.out.println("Natoceno je " + litres + " goriva");
         } else {
-            System.out.println("Kolicina goriva mora da bude pozitivna!");
+           throw new Exception("Kolicina goriva mora da bude pozitivna!");
         }
+        
+        displayState();
     }
 
     @Override
     public void doService() {
         serviced = true;
         System.out.println("Kamion je servisiran!");
+        displayState();
     }
-    
-    public void loadCargo(){
-        cargo=true;
-        System.out.println("Kamion je natovaren!");
+
+    public void loadCargo() throws Exception {
+        if (!cargo) {
+            cargo = true;
+            System.out.println("Kamion je natovaren!");
+        } else {
+            throw new Exception("Kamion je vec natovaren!");
+        }
     }
 
 }

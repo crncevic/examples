@@ -12,12 +12,12 @@ package domain;
 public class Yacht extends Ship {
 
     public static int numberOfYachts = 0;
-    private final int gasUnitInLitres = 100; 
-    
-    public Yacht(){
+    private final int gasUnitInLitres = 100;
+
+    public Yacht() {
         numberOfYachts++;
     }
-    
+
     public boolean isCrewLoaded() {
         return crewLoaded;
     }
@@ -69,7 +69,6 @@ public class Yacht extends Ship {
     public static int getNumberOfYachts() {
         return numberOfYachts;
     }
-    
 
     @Override
     public void drive(Destination d) throws Exception {
@@ -94,7 +93,7 @@ public class Yacht extends Ship {
         fuel -= gasUnitInLitres;
         crewLoaded = false;
 
-         System.out.println("Voznja uspesno obavljena!!!");
+        System.out.println("Voznja uspesno obavljena!!!");
         displayState();
     }
 
@@ -111,25 +110,32 @@ public class Yacht extends Ship {
     }
 
     @Override
-    public void loadCrew() {
-        crewLoaded = true;
-        System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
+    public void loadCrew() throws Exception {
+        if (!crewLoaded) {
+            crewLoaded = true;
+            System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
+        } else {
+            throw new Exception("Posada je vec ukrcana!");
+        
+        }
     }
 
-   @Override
-    public void loadFuel(int litres) {
+    @Override
+    public void loadFuel(int litres) throws Exception {
         if (litres > 0) {
             fuel += litres;
             System.out.println("Natoceno je " + litres + " goriva");
         } else {
-            System.out.println("Kolicina goriva mora da bude pozitivna!");
+            throw new Exception("Kolicina goriva mora da bude pozitivna!");
         }
+        displayState();
     }
 
     @Override
     public void doService() {
         serviced = true;
         System.out.println("Kamion je servisiran!");
+        displayState();
     }
 
 }

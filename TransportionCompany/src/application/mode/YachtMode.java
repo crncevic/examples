@@ -7,10 +7,12 @@ package application.mode;
 
 import constants.Constants;
 import domain.Destination;
-import factory.CarCreator;
+import domain.Sailboat;
+import domain.Yacht;
+import factory.SailboatCreator;
+import factory.YachtCreator;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import service.Service;
 
@@ -18,16 +20,15 @@ import service.Service;
  *
  * @author Petar
  */
-public class CarMode extends ApplicationMode {
+public class YachtMode extends ApplicationMode{
+    private List<Destination> destinations;
+    private Destination currentDestination;
 
-    List<Destination> destinations;
-    Destination currentDestination;
-
-    public CarMode() {
-        creator = new CarCreator();
+    public YachtMode() {
+        creator = new YachtCreator();
         creator.create();
         service = new Service();
-        destinations = service.getDestinationsFor(Constants.VEHICLE);
+        destinations = service.getDestinationsFor(Constants.SHIP);
     }
 
     @Override
@@ -66,18 +67,18 @@ public class CarMode extends ApplicationMode {
     @Override
     public void drive() {
         int choose = -1;
-        System.out.println("Izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis [0-Izlaz]");
+        System.out.println("Izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4-ukrcaj posadu [0-Izlaz]");
         do {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             try {
                 choose = Integer.parseInt(reader.readLine());
-                if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
-                    System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis [0-Izlaz]. Pokusajte ponovo!");
+                if (choose != 1 && choose != 2 && choose != 3 && choose != 4 && choose != 0) {
+                    System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4- ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
                 }
             } catch (Exception e) {
-                System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis [0-Izlaz]. Pokusajte ponovo!");
+                System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4 - ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
             }
-        } while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
+        } while (choose != 0 && choose != 1 && choose != 2 && choose != 3 && choose != 4);
 
         switch (choose) {
             case 1:
@@ -88,6 +89,9 @@ public class CarMode extends ApplicationMode {
                 break;
             case 3:
                 service();
+                break;
+            case 4:
+                loadCrew();
                 break;
             default:
                 System.out.println("Hvala na poverenju! Dovidjenja!");
@@ -117,7 +121,6 @@ public class CarMode extends ApplicationMode {
                 System.out.println("Molimo Vas unesite 1 ako zelite da nastavite sa radom ili 0 ako ne zelite! Pokusajte ponovo!");
             }
         }
-
     }
 
     private boolean isValidID(int choose) {
@@ -149,8 +152,13 @@ public class CarMode extends ApplicationMode {
         }
     }
 
-    private void service() {
-        creator.tm.doService();
+    private void loadCrew() {
+        try {
+            Yacht yacht = (Yacht) creator.tm;
+            yacht.loadCrew();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void startDrive() {
@@ -161,4 +169,7 @@ public class CarMode extends ApplicationMode {
         }
     }
 
+    private void service() {
+        creator.tm.doService();
+    }
 }

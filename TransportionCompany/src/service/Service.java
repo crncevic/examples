@@ -5,6 +5,7 @@
  */
 package service;
 
+import constants.Constants;
 import domain.Destination;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 public class Service {
 
     List<Destination> destinations;
- 
 
     public Service() {
         destinations = new ArrayList<>();
@@ -28,25 +28,27 @@ public class Service {
     }
 
     private void initDestinations() {
-       destinations.add(new Destination(1, "Beograd", 1,true));
-       destinations.add(new Destination(2, "Budimpesta", 3,true));
-       destinations.add(new Destination(3, "Bec", 5,true));
-       
-       destinations.add(new Destination(4, "Atina", 1,false));
-       destinations.add(new Destination(5, "Monako", 3,false));
-       destinations.add(new Destination(6, "Malta", 5,false));
-       
+        destinations.add(new Destination(1, "Beograd", 1, true));
+        destinations.add(new Destination(2, "Budimpesta", 3, true));
+        destinations.add(new Destination(3, "Bec", 5, true));
+
+        destinations.add(new Destination(4, "Atina", 1, false));
+        destinations.add(new Destination(5, "Monako", 3, false));
+        destinations.add(new Destination(6, "Malta", 5, false));
+
     }
-    
-    public List<Destination> getDestinationsForVehicle(){
-        List<Destination> destinationsVehicle = new ArrayList();
-        
+
+    public List<Destination> getDestinationsFor(String transportionMean) {
+        List<Destination> destinationsFor = new ArrayList();
+
         for (Destination d : destinations) {
-            if(d.isLandTransportion()){
-                destinationsVehicle.add(d);
+            if (transportionMean.equals(Constants.VEHICLE) && d.isLandTransportion()) {
+                destinationsFor.add(d);
+            } else if (transportionMean.equals(Constants.SHIP) && !d.isLandTransportion()) {
+                destinationsFor.add(d);
             }
         }
-        
-        return destinationsVehicle;
+
+        return destinationsFor;
     }
 }
