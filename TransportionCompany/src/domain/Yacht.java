@@ -5,6 +5,8 @@
  */
 package domain;
 
+import exception.NoFuelException;
+
 /**
  *
  * @author Petar
@@ -81,7 +83,7 @@ public class Yacht extends Ship {
         }
 
         if (fuel < (d.getGasUnits() * gasUnitInLitres)) {
-            throw new Exception("Jahta nema dovoljno goriva! Nije moguce obaviti voznju!");
+            throw new NoFuelException("Jahta nema dovoljno goriva! Nije moguce obaviti voznju!",null);
         }
 
         if (timesDriven >= 3) {

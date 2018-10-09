@@ -5,6 +5,8 @@
  */
 package domain;
 
+import exception.NoFuelException;
+
 /**
  *
  * @author Petar
@@ -91,7 +93,7 @@ public class Truck extends Vehicle {
     @Override
     public void drive(Destination d) throws Exception {
         if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres * 2)) && cargo == true)) {
-            throw new Exception("Kamion nema dovoljno goriva! Voznja nece biti obavljena");
+            throw new NoFuelException("Kamion nema dovoljno goriva! Voznja nece biti obavljena",null);
         }
 
         if (timesDriven > 8) {

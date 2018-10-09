@@ -151,6 +151,7 @@ public class YachtMode extends ApplicationMode{
             }
         }
     }
+    
 
     private void loadCrew() {
         try {
