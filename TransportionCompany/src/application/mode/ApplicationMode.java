@@ -19,7 +19,8 @@ public abstract class ApplicationMode {
     
     public abstract void startConversation();
     public abstract void chooseDestination();
-    public abstract void drive();
+    public abstract void drive() throws Exception;
+    public abstract void startDrive() throws Exception;
     
     
     

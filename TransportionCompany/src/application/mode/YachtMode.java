@@ -34,7 +34,12 @@ public class YachtMode extends ApplicationMode{
     @Override
     public void startConversation() {
         chooseDestination();
-        drive();
+        try {
+			drive();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -65,7 +70,7 @@ public class YachtMode extends ApplicationMode{
     }
 
     @Override
-    public void drive() {
+    public void drive() throws Exception {
         int choose = -1;
         System.out.println("Izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4-ukrcaj posadu [0-Izlaz]");
         do {
@@ -94,8 +99,8 @@ public class YachtMode extends ApplicationMode{
                 loadCrew();
                 break;
             default:
-                System.out.println("Hvala na poverenju! Dovidjenja!");
-                System.exit(0);
+            	break;
+               
         }
 
         System.out.println("Da li zelite da nastavite sa radom? [0-NE 1-DA]");
@@ -114,8 +119,7 @@ public class YachtMode extends ApplicationMode{
                     drive();
                     break;
                 } else {
-                    System.out.println("Hvala na poverenju! Dovidjenja!");
-                    System.exit(0);
+                	break;
                 }
             } catch (Exception ex) {
                 System.out.println("Molimo Vas unesite 1 ako zelite da nastavite sa radom ili 0 ako ne zelite! Pokusajte ponovo!");
@@ -162,11 +166,14 @@ public class YachtMode extends ApplicationMode{
         }
     }
 
-    private void startDrive() {
+    @Override
+    public void startDrive() throws Exception {
         try {
             creator.tm.drive(currentDestination);
+            System.out.println("Jahta je stigla u: "+currentDestination.getName());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            throw ex;
         }
     }
 

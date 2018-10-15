@@ -5,7 +5,6 @@
  */
 package test;
 
-import com.sun.org.apache.xerces.internal.util.FeatureState;
 import com.sun.org.apache.xerces.internal.util.PropertyState;
 import domain.Destination;
 import domain.Sailboat;
