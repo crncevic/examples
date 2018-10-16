@@ -52,11 +52,13 @@ public class CarMode extends ApplicationMode {
 		}
 
 		System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije:");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		
 		while (true) {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(reader.readLine());
 				if (isValidID(choose)) {
+					//clooseReader(reader);
 					break;
 				} else {
 					System.out.println("Molimo Vas unesite validan ID destinacije:");
@@ -66,8 +68,6 @@ public class CarMode extends ApplicationMode {
 			}
 
 		}
-		
-		clooseReader(reader);
 
 	}
 
@@ -76,9 +76,9 @@ public class CarMode extends ApplicationMode {
 		while (true) {
 			int choose = -1;
 			System.out.println("Izaberite opciju  1-natoci gorivo, 2-uradi servis [0-Sledeci korak]");
-			BufferedReader reader;
+
 			do {
-			    reader = new BufferedReader(new InputStreamReader(System.in));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				try {
 					choose = Integer.parseInt(reader.readLine());
 					if (choose != 1 && choose != 2 && choose != 0) {
@@ -89,9 +89,9 @@ public class CarMode extends ApplicationMode {
 					System.out.println(
 							"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis [0-Sledeci korak]. Pokusajte ponovo!");
 				}
+
+				
 			} while (choose != 0 && choose != 1 && choose != 2);
-			
-			clooseReader(reader);
 
 			switch (choose) {
 			case 1:
@@ -104,14 +104,11 @@ public class CarMode extends ApplicationMode {
 			default:
 				break;
 			}
-			
-			clooseReader(reader);
 
 			int choose2 = -1;
 			System.out.println("Da li zelite jos akcija pre nego sto zavrsite sa podesavanjima za auto? [1-DA 0-NE]");
-			BufferedReader reader2;
 			do {
-				reader2 = new BufferedReader(new InputStreamReader(System.in));
+				BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
 				try {
 					choose2 = Integer.parseInt(reader2.readLine());
 					if (choose2 != 0 && choose2 != 1) {
@@ -121,10 +118,9 @@ public class CarMode extends ApplicationMode {
 				} catch (Exception ex) {
 					System.out.println("Molimo Vas izaberite 1-jos akcija 0-kraj podesavanja!");
 				}
+
 			} while (choose2 != 0 && choose2 != 1);
 
-			clooseReader(reader2);
-			
 			if (choose2 == 0) {
 				break;
 			}
@@ -146,9 +142,8 @@ public class CarMode extends ApplicationMode {
 	private void loadFuel() {
 		System.out.println("Unesite broj litara:");
 
-		BufferedReader reader;
 		while (true) {
-			 reader = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				int litres = Integer.parseInt(reader.readLine());
 				if (litres < 0) {
@@ -161,8 +156,7 @@ public class CarMode extends ApplicationMode {
 				System.out.println("Molimo Vas unesite validan ceo pozitivan broj!");
 			}
 		}
-		
-		clooseReader(reader);
+
 	}
 
 	private void service() {
@@ -178,15 +172,6 @@ public class CarMode extends ApplicationMode {
 			throw ex;
 		}
 	}
+
 	
-	private void clooseReader(BufferedReader reader) {
-		if(reader != null) {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				System.out.println("Nije moguce zatvoriti BufferedReader!");
-			}
-		}
-		
-	}
 }
