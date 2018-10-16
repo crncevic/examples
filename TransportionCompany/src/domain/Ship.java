@@ -13,5 +13,5 @@ public abstract class Ship extends TransportionMean{
     protected boolean crewLoaded;
     protected String name;
     
-    public abstract void loadCrew() throws Exception;
+    public abstract void loadCrew() throws RuntimeException;
 }

@@ -5,6 +5,7 @@
  */
 package domain;
 
+import constants.Constants;
 import exception.NoFuelException;
 
 /**
@@ -22,6 +23,80 @@ public class Truck extends Vehicle {
         numberOfTrucks++;
     }
 
+   
+
+    @Override
+    public void drive(Destination d) throws RuntimeException {
+        
+    	if(!serviced) {
+    		throw new RuntimeException("Kamion nije servisiran nije moguce obaviti voznju!");
+    	}
+    	
+    	if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres * 2)) && cargo == true)) {
+            throw new NoFuelException("Kamion nema dovoljno goriva! Voznja nece biti obavljena",null);
+        }
+
+        if (timesDriven == Constants.TRUCK_DRIVES_LIMIT) {
+            serviced = false;
+        }
+
+        if (cargo) {
+            fuel -= gasUnitInLitres*2;
+        } else {
+            fuel -= gasUnitInLitres;
+        }
+
+        timesDriven++;
+        cargo = false;
+
+        displayState();
+    }
+
+    @Override
+    public void displayState() {
+        System.out.println("*********************** STANJE KAMIONA **************************");
+        System.out.println("Model: " + model);
+        System.out.println("Zapremina motora: " + engineCapacity);
+        System.out.println("Godina proizvodnje: " + yearOfProduction);
+        System.out.println("Vozen: " + timesDriven + " puta");
+        System.out.println("Gorivo: " + fuel + " litara");
+        System.out.println("Natovaren: " + cargo);
+        System.out.println("Servisiran: " + serviced);
+        System.out.println("*****************************************************************");
+    }
+
+    @Override
+    public void calculateRegistrationFees() {
+    }
+
+    @Override
+    public void loadFuel(int litres) throws RuntimeException {
+        if (litres > 0) {
+            fuel += litres;
+            System.out.println("Natoceno je " + litres + " goriva");
+        } else {
+           throw new RuntimeException("Kolicina goriva mora da bude pozitivna!");
+        }
+        
+        displayState();
+    }
+
+    @Override
+    public void doService() {
+        serviced = true;
+        System.out.println("Kamion je servisiran!");
+        displayState();
+    }
+
+    public void loadCargo() throws RuntimeException {
+        if (!cargo) {
+            cargo = true;
+            System.out.println("Kamion je natovaren!");
+        } else {
+            throw new RuntimeException("Kamion je vec natovaren!");
+        }
+    }
+    
     public boolean isCargo() {
         return cargo;
     }
@@ -88,74 +163,6 @@ public class Truck extends Vehicle {
 
     public int getGasUnitInLitres() {
         return gasUnitInLitres;
-    }
-
-    @Override
-    public void drive(Destination d) throws Exception {
-        if ((fuel <= (d.getGasUnits() * gasUnitInLitres) && cargo == false) || (fuel <= (d.getGasUnits() * (gasUnitInLitres * 2)) && cargo == true)) {
-            throw new NoFuelException("Kamion nema dovoljno goriva! Voznja nece biti obavljena",null);
-        }
-
-        if (timesDriven > 8) {
-            serviced = false;
-            throw new Exception("Kamion mora da obavi servis! Voznja nece biti obavljena");
-        }
-
-        if (cargo) {
-            fuel -= 40;
-        } else {
-            fuel -= 20;
-        }
-
-        timesDriven++;
-        cargo = false;
-
-        displayState();
-    }
-
-    @Override
-    public void displayState() {
-        System.out.println("*********************** STANJE KAMIONA **************************");
-        System.out.println("Model: " + model);
-        System.out.println("Zapremina motora: " + engineCapacity);
-        System.out.println("Godina proizvodnje: " + yearOfProduction);
-        System.out.println("Vozen: " + timesDriven + " puta");
-        System.out.println("Gorivo: " + fuel + " litara");
-        System.out.println("Natovaren: " + cargo);
-        System.out.println("Servisiran: " + serviced);
-        System.out.println("*****************************************************************");
-    }
-
-    @Override
-    public void calculateRegistrationFees() {
-    }
-
-    @Override
-    public void loadFuel(int litres) throws Exception {
-        if (litres > 0) {
-            fuel += litres;
-            System.out.println("Natoceno je " + litres + " goriva");
-        } else {
-           throw new Exception("Kolicina goriva mora da bude pozitivna!");
-        }
-        
-        displayState();
-    }
-
-    @Override
-    public void doService() {
-        serviced = true;
-        System.out.println("Kamion je servisiran!");
-        displayState();
-    }
-
-    public void loadCargo() throws Exception {
-        if (!cargo) {
-            cargo = true;
-            System.out.println("Kamion je natovaren!");
-        } else {
-            throw new Exception("Kamion je vec natovaren!");
-        }
     }
 
 }

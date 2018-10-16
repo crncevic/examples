@@ -10,6 +10,7 @@ import application.mode.CarMode;
 import application.mode.SailboatMode;
 import application.mode.TruckMode;
 import application.mode.YachtMode;
+import constants.Constants;
 import domain.TransportionMean;
 import thread.MyThread;
 
@@ -40,7 +41,7 @@ public class Main {
 		for (int i = 0; i < m.numberOfDrives; i++) {
 			m.threads.add(new MyThread(m.chooseTransportionMean()));
 		}
-		
+
 		m.startDrives(m.threads);
 
 	}
@@ -66,8 +67,8 @@ public class Main {
 					myThread.start();
 					myThread.join();
 				}
-				
-				if(MyThread.allThreadsSuccessfullyEndTrip) {
+
+				if (MyThread.allThreadsSuccessfullyEndTrip) {
 					System.out.println("Sva vozila su uspesno zavrsila putovanje!");
 				}
 			} catch (Exception ex) {
@@ -83,11 +84,17 @@ public class Main {
 
 		int choose = -1;
 		do {
-			System.out.println("Unesite koliko zelite voznji:");
+			System.out.println(Constants.START_MESSAGE);
+			System.out.println("Unesite koliko zelite voznji: [0-Izlaz]");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 			try {
 				choose = Integer.parseInt(reader.readLine());
+
+				if (choose == 0) {
+					System.out.println(Constants.GOOD_BYE);
+					System.exit(0);
+				}
 			} catch (Exception e) {
 				System.out.println("Molimo Vas unesite pozitivan broj koji reprezentuje broj voznji!");
 			}

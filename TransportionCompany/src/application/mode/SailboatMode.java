@@ -50,7 +50,7 @@ public class SailboatMode extends ApplicationMode {
 			System.out.println("ID: " + destination.getDestinationId() + ", Mesto: " + destination.getName());
 		}
 
-		System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije: [0-Izlaz]");
+		System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije.");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		while (true) {
 			try {
@@ -58,10 +58,10 @@ public class SailboatMode extends ApplicationMode {
 				if (isValidID(choose)) {
 					break;
 				} else {
-					System.out.println("Molimo Vas unesite validan ID ili 0 za izlaz");
+					System.out.println("Molimo Vas unesite validan ID destinacije!");
 				}
 			} catch (Exception e) {
-				System.out.println("Molimo Vas unesite validan ID ili 0 za izlaz");
+				System.out.println("Molimo Vas unesite validan ID destinacije!");
 			}
 
 		}
@@ -72,61 +72,36 @@ public class SailboatMode extends ApplicationMode {
 	public void drive() throws Exception {
 		int choose = -1;
 		System.out.println(
-				"Izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4-ukrcaj posadu [0-Izlaz]");
+				"Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]");
 		do {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(reader.readLine());
-				if (choose != 1 && choose != 2 && choose != 3 && choose != 4 && choose != 0) {
+				if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
 					System.out.println(
-							"Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4- ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
+							"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
 				}
 			} catch (Exception e) {
 				System.out.println(
-						"Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4 - ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
+						"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
 			}
-		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3 && choose != 4);
+		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
 
 		switch (choose) {
+
 		case 1:
-			startDrive();
-			break;
-		case 2:
 			loadFuel();
 			break;
-		case 3:
+		case 2:
 			service();
 			break;
-		case 4:
+		case 3:
 			loadCrew();
 			break;
 		default:
 			break;
 		}
 
-		System.out.println("Da li zelite da nastavite sa radom? [0-NE 1-DA]");
-		int choose2 = -1;
-
-		while (true) {
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			try {
-				choose2 = Integer.parseInt(reader.readLine());
-				if (choose2 != 0 && choose2 != 1) {
-					throw new Exception();
-				}
-
-				if (choose2 == 1) {
-					drive();
-					break;
-				} else {
-					break;
-				}
-			} catch (Exception ex) {
-				System.out.println(
-						"Molimo Vas unesite 1 ako zelite da nastavite sa radom ili 0 ako ne zelite! Pokusajte ponovo!");
-			}
-		}
 	}
 
 	private boolean isValidID(int choose) {
@@ -153,7 +128,7 @@ public class SailboatMode extends ApplicationMode {
 				break;
 
 			} catch (Exception ex) {
-				System.out.println("Molimo Vas unesite validan ceo pozitivan broj![0-Izlaz]");
+				System.out.println("Molimo Vas unesite validan ceo pozitivan broj:");
 			}
 		}
 	}

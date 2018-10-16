@@ -20,164 +20,140 @@ import service.Service;
  *
  * @author Petar
  */
-public class YachtMode extends ApplicationMode{
-    private List<Destination> destinations;
-    private Destination currentDestination;
+public class YachtMode extends ApplicationMode {
+	private List<Destination> destinations;
+	private Destination currentDestination;
 
-    public YachtMode() {
-        creator = new YachtCreator();
-        creator.create();
-        service = new Service();
-        destinations = service.getDestinationsFor(Constants.SHIP);
-    }
+	public YachtMode() {
+		creator = new YachtCreator();
+		creator.create();
+		service = new Service();
+		destinations = service.getDestinationsFor(Constants.SHIP);
+	}
 
-    @Override
-    public void startConversation() {
-        chooseDestination();
-        try {
+	@Override
+	public void startConversation() {
+		chooseDestination();
+		try {
 			drive();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @Override
-    public void chooseDestination() {
-        int choose = -1;
-        System.out.println("Destinacije:");
+	@Override
+	public void chooseDestination() {
+		int choose = -1;
+		System.out.println("Destinacije:");
 
-        for (Destination destination : destinations) {
-            System.out.println("ID: " + destination.getDestinationId() + ", Mesto: " + destination.getName());
-        }
+		for (Destination destination : destinations) {
+			System.out.println("ID: " + destination.getDestinationId() + ", Mesto: " + destination.getName());
+		}
 
-        System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije: [0-Izlaz]");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            try {
-                choose = Integer.parseInt(reader.readLine());
-                if (isValidID(choose)) {
-                    break;
-                } else {
-                    System.out.println("Molimo Vas unesite validan ID ili 0 za izlaz");
-                }
-            } catch (Exception e) {
-                System.out.println("Molimo Vas unesite validan ID ili 0 za izlaz");
-            }
+		System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije!");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		while (true) {
+			try {
+				choose = Integer.parseInt(reader.readLine());
+				if (isValidID(choose)) {
+					break;
+				} else {
+					System.out.println("Molimo Vas unesite validan ID!");
+				}
+			} catch (Exception e) {
+				System.out.println("Molimo Vas unesite validan ID!");
+			}
 
-        }
+		}
 
-    }
+	}
 
-    @Override
-    public void drive() throws Exception {
-        int choose = -1;
-        System.out.println("Izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4-ukrcaj posadu [0-Izlaz]");
-        do {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            try {
-                choose = Integer.parseInt(reader.readLine());
-                if (choose != 1 && choose != 2 && choose != 3 && choose != 4 && choose != 0) {
-                    System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4- ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
-                }
-            } catch (Exception e) {
-                System.out.println("Molimo Vas izaberite opciju 1-startuj voznju, 2-natoci gorivo, 3-uradi servis, 4 - ukrcaj posadu [0-Izlaz]. Pokusajte ponovo!");
-            }
-        } while (choose != 0 && choose != 1 && choose != 2 && choose != 3 && choose != 4);
+	@Override
+	public void drive() throws Exception {
+		int choose = -1;
+		System.out.println("Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]");
+		do {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			try {
+				choose = Integer.parseInt(reader.readLine());
+				if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
+					System.out.println(
+							"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
+				}
+			} catch (Exception e) {
+				System.out.println(
+						"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
+			}
+		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
 
-        switch (choose) {
-            case 1:
-                startDrive();
-                break;
-            case 2:
-                loadFuel();
-                break;
-            case 3:
-                service();
-                break;
-            case 4:
-                loadCrew();
-                break;
-            default:
-            	break;
-               
-        }
+		switch (choose) {
+		case 1:
+			loadFuel();
+			break;
+		case 2:
+			service();
+			break;
+		case 3:
+			loadCrew();
+			break;
+		default:
+			break;
 
-        System.out.println("Da li zelite da nastavite sa radom? [0-NE 1-DA]");
-        int choose2 = -1;
+		}
 
-        while (true) {
+	}
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            try {
-                choose2 = Integer.parseInt(reader.readLine());
-                if (choose2 != 0 && choose2 != 1) {
-                    throw new Exception();
-                }
+	private boolean isValidID(int choose) {
+		for (Destination destination : destinations) {
+			if (choose == destination.getDestinationId()) {
+				currentDestination = destination;
+				return true;
+			}
+		}
+		return false;
+	}
 
-                if (choose2 == 1) {
-                    drive();
-                    break;
-                } else {
-                	break;
-                }
-            } catch (Exception ex) {
-                System.out.println("Molimo Vas unesite 1 ako zelite da nastavite sa radom ili 0 ako ne zelite! Pokusajte ponovo!");
-            }
-        }
-    }
+	private void loadFuel() {
+		System.out.println("Unesite broj litara:");
 
-    private boolean isValidID(int choose) {
-        for (Destination destination : destinations) {
-            if (choose == destination.getDestinationId()) {
-                currentDestination = destination;
-                return true;
-            }
-        }
-        return false;
-    }
+		while (true) {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			try {
+				int litres = Integer.parseInt(reader.readLine());
+				if (litres < 0) {
+					throw new Exception();
+				}
+				creator.tm.loadFuel(litres);
+				break;
 
-    private void loadFuel() {
-        System.out.println("Unesite broj litara:");
+			} catch (Exception ex) {
+				System.out.println("Molimo Vas unesite validan ceo pozitivan broj:");
+			}
+		}
+	}
 
-        while (true) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            try {
-                int litres = Integer.parseInt(reader.readLine());
-                if (litres < 0) {
-                    throw new Exception();
-                }
-                creator.tm.loadFuel(litres);
-                break;
+	private void loadCrew() {
+		try {
+			Yacht yacht = (Yacht) creator.tm;
+			yacht.loadCrew();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
-            } catch (Exception ex) {
-                System.out.println("Molimo Vas unesite validan ceo pozitivan broj![0-Izlaz]");
-            }
-        }
-    }
-    
+	@Override
+	public void startDrive() throws Exception {
+		try {
+			creator.tm.drive(currentDestination);
+			System.out.println("Jahta je stigla u: " + currentDestination.getName());
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			throw ex;
+		}
+	}
 
-    private void loadCrew() {
-        try {
-            Yacht yacht = (Yacht) creator.tm;
-            yacht.loadCrew();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void startDrive() throws Exception {
-        try {
-            creator.tm.drive(currentDestination);
-            System.out.println("Jahta je stigla u: "+currentDestination.getName());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            throw ex;
-        }
-    }
-
-    private void service() {
-        creator.tm.doService();
-    }
+	private void service() {
+		creator.tm.doService();
+	}
 }

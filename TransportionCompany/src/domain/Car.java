@@ -5,6 +5,7 @@
  */
 package domain;
 
+import constants.Constants;
 import exception.NoFuelException;
 
 /**
@@ -20,6 +21,63 @@ public class Car extends Vehicle {
         numberOfCars++;
     }
 
+   
+    @Override
+    public void drive(Destination d) throws RuntimeException {
+    	
+    	if(!serviced) {
+    		throw new RuntimeException("Auto nije servisiran!");
+    	}
+    	
+        if (fuel <= (d.getGasUnits() * gasUnitInLitres)) {
+            throw new NoFuelException("Auto nema dovoljno goriva! Voznja nece biti obavljena!",null);
+        }
+
+        if (timesDriven == Constants.CAR_DRIVES_LIMIT) {
+        	serviced=false;
+        }
+
+        this.fuel -= gasUnitInLitres;
+        this.timesDriven++;
+
+        displayState();
+    }
+
+    @Override
+    public void displayState() {
+        System.out.println("*********************** STANJE KOLA **************************");
+        System.out.println("Model: " + model);
+        System.out.println("Zapremina motora: " + engineCapacity);
+        System.out.println("Godina proizvodnje: " + yearOfProduction);
+        System.out.println("Vozen: " + timesDriven + " puta");
+        System.out.println("Gorivo: " + fuel + " litara");
+        System.out.println("Servisiran: " + serviced);
+        System.out.println("**************************************************************");
+    }
+
+    @Override
+    public void calculateRegistrationFees() {
+
+    }
+
+    @Override
+    public void loadFuel(int litres) throws RuntimeException {
+        if (litres > 0) {
+            fuel += litres;
+            System.out.println("Natoceno je " + litres + " goriva");
+        } else {
+            throw new RuntimeException("Kolicina goriva mora da bude pozitivna!");
+        }
+        displayState();
+    }
+
+    @Override
+    public void doService() {
+        serviced = true;
+        System.out.println("Auto je servisiran!");
+        displayState();
+    }
+    
     public String getModel() {
         return model;
     }
@@ -80,55 +138,5 @@ public class Car extends Vehicle {
         return gasUnitInLitres;
     }
 
-    @Override
-    public void drive(Destination d) throws Exception {
-        if (fuel <= (d.getGasUnits() * gasUnitInLitres)) {
-            throw new NoFuelException("Auto nema dovoljno goriva! Voznja nece biti obavljena!",null);
-        }
-
-        if (timesDriven > 8) {
-            throw new Exception("Auto mora na servis! Voznja nece biti obavljena!");
-        }
-
-        this.fuel -= 20;
-        this.timesDriven++;
-
-        displayState();
-    }
-
-    @Override
-    public void displayState() {
-        System.out.println("*********************** STANJE KOLA **************************");
-        System.out.println("Model: " + model);
-        System.out.println("Zapremina motora: " + engineCapacity);
-        System.out.println("Godina proizvodnje: " + yearOfProduction);
-        System.out.println("Vozen: " + timesDriven + " puta");
-        System.out.println("Gorivo: " + fuel + " litara");
-        System.out.println("Servisiran: " + serviced);
-        System.out.println("**************************************************************");
-    }
-
-    @Override
-    public void calculateRegistrationFees() {
-
-    }
-
-    @Override
-    public void loadFuel(int litres) throws Exception {
-        if (litres > 0) {
-            fuel += litres;
-            System.out.println("Natoceno je " + litres + " goriva");
-        } else {
-            throw new Exception("Kolicina goriva mora da bude pozitivna!");
-        }
-        displayState();
-    }
-
-    @Override
-    public void doService() {
-        serviced = true;
-        System.out.println("Auto je servisiran!");
-        displayState();
-    }
 
 }

@@ -5,6 +5,7 @@
  */
 package domain;
 
+import constants.Constants;
 import exception.NoFuelException;
 
 /**
@@ -20,6 +21,74 @@ public class Yacht extends Ship {
         numberOfYachts++;
     }
 
+   
+    @Override
+    public void drive(Destination d) throws RuntimeException {
+        if (!serviced) {
+            throw new RuntimeException("Jahta nije servisirana! Nije moguce obaviti voznju!");
+        }
+
+        if (!crewLoaded) {
+            throw new RuntimeException("Jahta nema posadu! Nije moguce obaviti voznju!");
+        }
+
+        if (fuel < (d.getGasUnits() * gasUnitInLitres)) {
+            throw new NoFuelException("Jahta nema dovoljno goriva! Nije moguce obaviti voznju!",null);
+        }
+
+        if (timesDriven == Constants.YACHT_DRIVES_LIMIT) {
+            serviced = false;
+        }
+
+        timesDriven++;
+        fuel -= gasUnitInLitres;
+        crewLoaded = false;
+
+        System.out.println("Voznja uspesno obavljena!!!");
+        displayState();
+    }
+
+    @Override
+    public void displayState() {
+        System.out.println("************************ STANJE JAHTE ***************************");
+        System.out.println("Naziv: " + name);
+        System.out.println("Godina proizvodnje: " + yearOfProduction);
+        System.out.println("Servisirana: " + serviced);
+        System.out.println("Posada ukrcana: " + crewLoaded);
+        System.out.println("Vozena " + timesDriven + " puta");
+        System.out.println("Gorivo: " + fuel + " litara");
+        System.out.println("*****************************************************************");
+    }
+
+    @Override
+    public void loadCrew() throws RuntimeException {
+        if (!crewLoaded) {
+            crewLoaded = true;
+            System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
+        } else {
+            throw new RuntimeException("Posada je vec ukrcana!");
+        
+        }
+    }
+
+    @Override
+    public void loadFuel(int litres) throws RuntimeException {
+        if (litres > 0) {
+            fuel += litres;
+            System.out.println("Natoceno je " + litres + " goriva");
+        } else {
+            throw new RuntimeException("Kolicina goriva mora da bude pozitivna!");
+        }
+        displayState();
+    }
+
+    @Override
+    public void doService() {
+        serviced = true;
+        System.out.println("Kamion je servisiran!");
+        displayState();
+    }
+    
     public boolean isCrewLoaded() {
         return crewLoaded;
     }
@@ -72,72 +141,5 @@ public class Yacht extends Ship {
         return numberOfYachts;
     }
 
-    @Override
-    public void drive(Destination d) throws Exception {
-        if (!serviced) {
-            throw new Exception("Jahta nije servisirana! Nije moguce obaviti voznju!");
-        }
-
-        if (!crewLoaded) {
-            throw new Exception("Jahta nema posadu! Nije moguce obaviti voznju!");
-        }
-
-        if (fuel < (d.getGasUnits() * gasUnitInLitres)) {
-            throw new NoFuelException("Jahta nema dovoljno goriva! Nije moguce obaviti voznju!",null);
-        }
-
-        if (timesDriven >= 3) {
-            serviced = false;
-            throw new Exception("Jahta nije servisirana! Nije moguce obaviti voznju!");
-        }
-
-        timesDriven++;
-        fuel -= gasUnitInLitres;
-        crewLoaded = false;
-
-        System.out.println("Voznja uspesno obavljena!!!");
-        displayState();
-    }
-
-    @Override
-    public void displayState() {
-        System.out.println("************************ STANJE JAHTE ***************************");
-        System.out.println("Naziv: " + name);
-        System.out.println("Godina proizvodnje: " + yearOfProduction);
-        System.out.println("Servisirana: " + serviced);
-        System.out.println("Posada ukrcana: " + crewLoaded);
-        System.out.println("Vozena " + timesDriven + " puta");
-        System.out.println("Gorivo: " + fuel + " litara");
-        System.out.println("*****************************************************************");
-    }
-
-    @Override
-    public void loadCrew() throws Exception {
-        if (!crewLoaded) {
-            crewLoaded = true;
-            System.out.println("Posada je ukrcana. Putovanje moze poceti!!");
-        } else {
-            throw new Exception("Posada je vec ukrcana!");
-        
-        }
-    }
-
-    @Override
-    public void loadFuel(int litres) throws Exception {
-        if (litres > 0) {
-            fuel += litres;
-            System.out.println("Natoceno je " + litres + " goriva");
-        } else {
-            throw new Exception("Kolicina goriva mora da bude pozitivna!");
-        }
-        displayState();
-    }
-
-    @Override
-    public void doService() {
-        serviced = true;
-        System.out.println("Kamion je servisiran!");
-        displayState();
-    }
 
 }

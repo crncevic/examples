@@ -9,7 +9,7 @@ package exception;
  *
  * @author Petar
  */
-public class NoFuelException extends Exception {
+public class NoFuelException extends RuntimeException {
 
     public NoFuelException(String message, Throwable t) {
         super(message, t);
