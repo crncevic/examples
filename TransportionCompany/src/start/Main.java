@@ -14,7 +14,10 @@ import constants.Constants;
 import domain.TransportionMean;
 import thread.MyThread;
 
+import static org.testng.Assert.assertThrows;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +54,9 @@ public class Main {
 
 		System.out.println("Izaberite : [0-Izlaz 1-Startuj voznje]");
 
+		BufferedReader reader;
 		do {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(reader.readLine());
 			} catch (Exception e) {
@@ -60,6 +64,8 @@ public class Main {
 			}
 
 		} while (choose != 0 && choose != 1);
+
+		clooseReader(reader);
 
 		if (choose == 1) {
 			try {
@@ -80,13 +86,28 @@ public class Main {
 
 	}
 
+	private void clooseReader(BufferedReader reader) {
+		if (reader != null) {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				System.out.println("Nije moguce zatvoriti BufferedReader!");
+			}
+		}
+
+	}
+
 	public int chooseNumberOfDrives() {
 
 		int choose = -1;
+		BufferedReader reader;
+
+		System.out.println(Constants.START_MESSAGE);
+		System.out.println("Unesite koliko zelite voznji: [0-Izlaz]");
+
 		do {
-			System.out.println(Constants.START_MESSAGE);
-			System.out.println("Unesite koliko zelite voznji: [0-Izlaz]");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+			reader = new BufferedReader(new InputStreamReader(System.in));
 
 			try {
 				choose = Integer.parseInt(reader.readLine());
@@ -95,11 +116,17 @@ public class Main {
 					System.out.println(Constants.GOOD_BYE);
 					System.exit(0);
 				}
+
+				if (choose < 0) {
+					throw new RuntimeException();
+				}
 			} catch (Exception e) {
 				System.out.println("Molimo Vas unesite pozitivan broj koji reprezentuje broj voznji!");
 			}
 
 		} while (choose < 0);
+
+		clooseReader(reader);
 
 		System.out.println("********************************************");
 		System.out.println("Molimo vas da unesete " + choose + " voznji!");
@@ -111,9 +138,11 @@ public class Main {
 
 	public ApplicationMode chooseTransportionMean(int i) {
 		int choose = -1;
+		BufferedReader bufferedReader;
 		do {
-			System.out.println("Izaberite nacin prevoza transportnog sredstva br: "+(i+1)+"  (1-auto 2-kamion 3-jahta 4-jedrilica 0-izlaz)");
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Izaberite nacin prevoza transportnog sredstva br: " + (i + 1)
+					+ "  (1-auto 2-kamion 3-jahta 4-jedrilica 0-izlaz)");
+			bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(bufferedReader.readLine());
 			} catch (Exception ex) {
@@ -121,6 +150,8 @@ public class Main {
 				choose = -1;
 			}
 		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3 && choose != 4);
+
+		clooseReader(bufferedReader);
 
 		switch (choose) {
 		case 1:

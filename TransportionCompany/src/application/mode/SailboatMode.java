@@ -10,6 +10,7 @@ import domain.Destination;
 import domain.Sailboat;
 import factory.SailboatCreator;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import service.Service;
@@ -65,6 +66,8 @@ public class SailboatMode extends ApplicationMode {
 			}
 
 		}
+		
+		clooseReader(reader);
 
 	}
 
@@ -75,8 +78,10 @@ public class SailboatMode extends ApplicationMode {
 		int choose = -1;
 		System.out.println(
 				"Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]");
+		
+		BufferedReader reader;
 		do {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		 reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(reader.readLine());
 				if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
@@ -89,6 +94,8 @@ public class SailboatMode extends ApplicationMode {
 			}
 		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
 
+		clooseReader(reader);
+		
 		switch (choose) {
 
 		case 1:
@@ -106,11 +113,11 @@ public class SailboatMode extends ApplicationMode {
 		
 		int choose2 = -1;
 		System.out.println("Da li zelite jos akcija pre nego sto zavrsite sa podesavanjima za jedrilicu? [1-DA 0-NE]");
-		BufferedReader reader;
+		BufferedReader reader2;
 		do {
-			reader = new BufferedReader(new InputStreamReader(System.in));
+			reader2 = new BufferedReader(new InputStreamReader(System.in));
 			try {
-				choose2 = Integer.parseInt(reader.readLine());
+				choose2 = Integer.parseInt(reader2.readLine());
 				if (choose2 != 0 && choose2 != 1) {
 					throw new Exception();
 				}
@@ -120,6 +127,8 @@ public class SailboatMode extends ApplicationMode {
 			}
 		} while (choose2 != 0 && choose2 != 1);
 
+		clooseReader(reader2);
+		
 		if (choose2 == 0) {
 			break;
 		}
@@ -141,8 +150,9 @@ public class SailboatMode extends ApplicationMode {
 	private void loadFuel() {
 		System.out.println("Unesite broj litara:");
 
+		BufferedReader reader;
 		while (true) {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		    reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				int litres = Integer.parseInt(reader.readLine());
 				if (litres < 0) {
@@ -155,6 +165,8 @@ public class SailboatMode extends ApplicationMode {
 				System.out.println("Molimo Vas unesite validan ceo pozitivan broj:");
 			}
 		}
+		
+		clooseReader(reader);
 	}
 
 	private void loadCrew() {
@@ -179,6 +191,17 @@ public class SailboatMode extends ApplicationMode {
 
 	private void service() {
 		creator.tm.doService();
+	}
+	
+	private void clooseReader(BufferedReader reader) {
+		if(reader != null) {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				System.out.println("Nije moguce zatvoriti BufferedReader!");
+			}
+		}
+		
 	}
 
 }
