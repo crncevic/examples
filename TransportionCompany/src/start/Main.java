@@ -39,7 +39,7 @@ public class Main {
 		m.numberOfDrives = m.chooseNumberOfDrives();
 
 		for (int i = 0; i < m.numberOfDrives; i++) {
-			m.threads.add(new MyThread(m.chooseTransportionMean()));
+			m.threads.add(new MyThread(m.chooseTransportionMean(i)));
 		}
 
 		m.startDrives(m.threads);
@@ -109,10 +109,10 @@ public class Main {
 
 	}
 
-	public ApplicationMode chooseTransportionMean() {
+	public ApplicationMode chooseTransportionMean(int i) {
 		int choose = -1;
 		do {
-			System.out.println("Izaberite nacin prevoza(1-auto 2-kamion 3-jahta 4-jedrilica 0-izlaz)");
+			System.out.println("Izaberite nacin prevoza transportnog sredstva br: "+(i+1)+"  (1-auto 2-kamion 3-jahta 4-jedrilica 0-izlaz)");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(bufferedReader.readLine());
