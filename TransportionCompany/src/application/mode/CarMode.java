@@ -37,8 +37,7 @@ public class CarMode extends ApplicationMode {
 		try {
 			drive();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Dogodila se greska u izvrsavanju aplikacije. Greska: " + e.getMessage());
 		}
 	}
 
