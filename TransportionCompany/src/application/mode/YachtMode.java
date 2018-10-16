@@ -71,34 +71,57 @@ public class YachtMode extends ApplicationMode {
 
 	@Override
 	public void drive() throws Exception {
-		int choose = -1;
-		System.out.println("Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]");
-		do {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			try {
-				choose = Integer.parseInt(reader.readLine());
-				if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
+		while (true) {
+			int choose = -1;
+			System.out.println("Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]");
+			do {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				try {
+					choose = Integer.parseInt(reader.readLine());
+					if (choose != 1 && choose != 2 && choose != 3 && choose != 0) {
+						System.out.println(
+								"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
+					}
+				} catch (Exception e) {
 					System.out.println(
 							"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
 				}
-			} catch (Exception e) {
-				System.out.println(
-						"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-ukrcaj posadu [0-Sledeci korak]. Pokusajte ponovo!");
-			}
-		} while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
+			} while (choose != 0 && choose != 1 && choose != 2 && choose != 3);
 
-		switch (choose) {
-		case 1:
-			loadFuel();
-			break;
-		case 2:
-			service();
-			break;
-		case 3:
-			loadCrew();
-			break;
-		default:
-			break;
+			switch (choose) {
+			case 1:
+				loadFuel();
+				break;
+			case 2:
+				service();
+				break;
+			case 3:
+				loadCrew();
+				break;
+			default:
+				break;
+
+			}
+
+			int choose2 = -1;
+			System.out.println("Da li zelite jos akcija pre nego sto zavrsite sa podesavanjima za jahtu? [1-DA 0-NE]");
+			BufferedReader reader;
+			do {
+				reader = new BufferedReader(new InputStreamReader(System.in));
+				try {
+					choose2 = Integer.parseInt(reader.readLine());
+					if (choose2 != 0 && choose2 != 1) {
+						throw new Exception();
+					}
+
+				} catch (Exception ex) {
+					System.out.println("Molimo Vas izaberite 1-jos akcija 0-kraj podesavanja!");
+				}
+			} while (choose2 != 0 && choose2 != 1);
+
+			if (choose2 == 0) {
+				break;
+			}
 
 		}
 

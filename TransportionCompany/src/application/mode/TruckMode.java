@@ -36,7 +36,6 @@ public class TruckMode extends ApplicationMode {
 		try {
 			drive();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -70,6 +69,9 @@ public class TruckMode extends ApplicationMode {
 
 	@Override
 	public void drive() throws Exception {
+		
+		while(true) {
+		
 		int choose = -1;
 		System.out.println("Izaberite opciju 1-natoci gorivo, 2-uradi servis, 3-utovari robu  [0-Sledeci korak]");
 		do {
@@ -100,6 +102,28 @@ public class TruckMode extends ApplicationMode {
 		default:
 			break;
 		}
+		
+		int choose2 = -1;
+		System.out.println("Da li zelite jos akcija pre nego sto zavrsite sa podesavanjima za kamion? [1-DA 0-NE]");
+		BufferedReader reader;
+		do {
+			reader = new BufferedReader(new InputStreamReader(System.in));
+			try {
+				choose2 = Integer.parseInt(reader.readLine());
+				if (choose2 != 0 && choose2 != 1) {
+					throw new Exception();
+				}
+
+			} catch (Exception ex) {
+				System.out.println("Molimo Vas izaberite 1-jos akcija 0-kraj podesavanja!");
+			}
+		} while (choose2 != 0 && choose2 != 1);
+
+		if (choose2 == 0) {
+			break;
+		}
+
+	}
 	}
 
 	private boolean isValidID(int choose) {
