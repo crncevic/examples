@@ -52,13 +52,13 @@ public class CarMode extends ApplicationMode {
 		}
 
 		System.out.println("Izaberite destinaciju tako sto ce te uneti tacan id destinacije:");
-		
+
 		while (true) {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				choose = Integer.parseInt(reader.readLine());
 				if (isValidID(choose)) {
-					//clooseReader(reader);
+					// clooseReader(reader);
 					break;
 				} else {
 					System.out.println("Molimo Vas unesite validan ID destinacije:");
@@ -90,7 +90,6 @@ public class CarMode extends ApplicationMode {
 							"Molimo Vas izaberite opciju 1-natoci gorivo, 2-uradi servis [0-Sledeci korak]. Pokusajte ponovo!");
 				}
 
-				
 			} while (choose != 0 && choose != 1 && choose != 2);
 
 			switch (choose) {
@@ -118,15 +117,11 @@ public class CarMode extends ApplicationMode {
 				} catch (Exception ex) {
 					System.out.println("Molimo Vas izaberite 1-jos akcija 0-kraj podesavanja!");
 				}
-
 			} while (choose2 != 0 && choose2 != 1);
-
 			if (choose2 == 0) {
 				break;
 			}
-
 		}
-
 	}
 
 	private boolean isValidID(int choose) {
@@ -173,5 +168,4 @@ public class CarMode extends ApplicationMode {
 		}
 	}
 
-	
 }

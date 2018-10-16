@@ -38,8 +38,7 @@ public class YachtMode extends ApplicationMode {
 		try {
 			drive();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Dogodila se greska u aplikaciji. Voznja nije izvrsena!");
 		}
 	}
 
@@ -126,8 +125,6 @@ public class YachtMode extends ApplicationMode {
 				
 			} while (choose2 != 0 && choose2 != 1);
 			
-		
-
 			if (choose2 == 0) {
 				break;
 			}

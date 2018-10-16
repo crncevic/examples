@@ -59,6 +59,11 @@ public class Main {
 		
 			try {
 				choose = Integer.parseInt(reader.readLine());
+				
+				if(choose !=0 && choose !=1) {
+					throw new RuntimeException();
+				}
+				
 			} catch (Exception e) {
 				System.out.println("Molimo Vas unesite 0-Izlaz ili 1-Startuj voznje!");
 			}

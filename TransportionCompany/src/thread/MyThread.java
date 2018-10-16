@@ -20,5 +20,4 @@ public class MyThread extends Thread {
 			System.out.println("Voznja nije uspesno zavrsena!Greska:" + e.getMessage());
 		}
 	}
-
 }
